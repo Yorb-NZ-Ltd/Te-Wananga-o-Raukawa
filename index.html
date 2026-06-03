@@ -184,12 +184,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   </script>
   <script>
   function sendHeight() {
-    var height = document.body.scrollHeight;
-    window.parent.postMessage({ height: height }, '*');
+    window.parent.postMessage({ iframeId: 'learning-prompt-frame', height: document.body.scrollHeight }, '*');
   }
   window.addEventListener('load', sendHeight);
   window.addEventListener('resize', sendHeight);
-  // Also check periodically in case content changes
   setInterval(sendHeight, 500);
 </script>
 </body>
