@@ -179,10 +179,16 @@ document.addEventListener('DOMContentLoaded', async function() {
 </body>
   <script>
   function sendHeight() {
-    window.parent.postMessage({ iframeId: 'race-framework-frame', height: document.body.scrollHeight }, '*');
+    var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.parent.postMessage({ iframeId: 'race-framework-frame', height: h }, '*');
   }
+
+  // Watch for DOM changes as the bundle unpacks
+  var observer = new MutationObserver(sendHeight);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+
   window.addEventListener('load', sendHeight);
   window.addEventListener('resize', sendHeight);
-  setInterval(sendHeight, 500);
+  setInterval(sendHeight, 1000);
 </script>
 </html>
